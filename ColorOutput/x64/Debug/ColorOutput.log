@@ -1,0 +1,6 @@
+﻿  Examples.cpp
+E:\C++\Projects\Studying\WinAPI\ColorOutput\Examples.cpp(116,27): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
+E:\C++\Projects\Studying\WinAPI\ColorOutput\Examples.cpp(116,44): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
+E:\C++\Projects\Studying\WinAPI\ColorOutput\Examples.cpp(116,77): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
+E:\C++\Projects\Studying\WinAPI\ColorOutput\Examples.cpp(116,100): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
+  ColorOutput.vcxproj -> E:\C++\Projects\Studying\WinAPI\x64\Debug\ColorOutput.exe

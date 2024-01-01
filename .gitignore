@@ -1,32 +1,33 @@
-# Prerequisites
-*.d
+#ignored file extensions
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
+*.sln
 *.exe
-*.out
-*.app
+*.user
+*.filters
+*.vcxproj
+*.i
+*.tlog
+*.log
+*.ilk
+*.pch
+*idb
+*.pdb
+*.jpeg
+*.png
+*.bmp
+*.obj
+*.o
+*.vsidx
+*.suo
+*.db
+*.ipch
+
+# Configuration Directories
+
+Debug/
+Release/
+
+# Platform Directories
+
+x64/
+x32/
