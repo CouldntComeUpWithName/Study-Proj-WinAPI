@@ -32,95 +32,105 @@ void ConsoleColorTable(bool executable = true)
 			}
 
 		Console::SetColor(BACKGROUND_INTENSITY);
+		_getch();
 	}
 }
 
-void RectangleMoving()
+void RectangleMoving(bool executable = true)
 {
-	SetConsoleTitleW(L"Rectangle Moving!");
-	Console::CursorVisibility(false);
-
-	Console::Rectangle rectangle(5, 7, { 5,6 }, ' ', BACKGROUND_GREEN | BACKGROUND_RED);
-
-	int pressed_Key{};
-	while (pressed_Key != Console::Key::ESC)
+	if (executable)
 	{
-		rectangle.Draw();
+		SetConsoleTitleW(L"Rectangle Moving!");
+		Console::CursorVisibility(false);
 
-		pressed_Key = _getch();
+		Console::Rectangle rectangle(5, 7, { 5,6 }, ' ', BACKGROUND_GREEN | BACKGROUND_RED);
 
-		switch (pressed_Key)
+		int pressed_Key{};
+		while (true)
 		{
-		case Console::Key::ARROW_UP:
-			rectangle.Move(Console::Direction::TOP);
-			break;
-		case Console::Key::ARROW_LEFT:
-			rectangle.Move(Console::Direction::LEFT);
-			break;
-		case Console::Key::ARROW_RIGHT:
-			rectangle.Move(Console::Direction::RIGHT);
-			break;
-		case Console::Key::ARROW_DOWN:
-			rectangle.Move(Console::Direction::DOWN);
-			break;
+			if (GetAsyncKeyState(Console::Key::ESC) & 0x8000)
+				return;
+
+			rectangle.Draw();
+
+			pressed_Key = _getch();
+
+			switch (pressed_Key)
+			{
+			case Console::Key::ARROW_UP:
+				rectangle.Move(Console::Direction::TOP);
+				break;
+			case Console::Key::ARROW_LEFT:
+				rectangle.Move(Console::Direction::LEFT);
+				break;
+			case Console::Key::ARROW_RIGHT:
+				rectangle.Move(Console::Direction::RIGHT);
+				break;
+			case Console::Key::ARROW_DOWN:
+				rectangle.Move(Console::Direction::DOWN);
+				break;
+			}
+
+		}
+	}
+}
+
+void DrawA(bool executable = true)
+{
+	if (executable)
+	{
+		SetConsoleTitleW(L"Drawing A!!!");
+		Console::SetColor(BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | BACKGROUND_INTENSITY);
+		Console::cls();
+
+		const int row = 10;
+		const int col = 10;
+	
+		bool A[row * col]
+		{
+		  0,0,0,0,1,1,0,0,0,0,
+		  0,0,0,1,0,0,1,0,0,0,
+		  0,0,0,1,0,0,1,0,0,0,
+		  0,0,1,0,0,0,0,1,0,0,
+		  0,0,1,0,0,0,0,1,0,0,
+		  0,0,1,1,1,1,1,1,0,0,
+		  0,1,0,0,0,0,0,0,1,0,
+		  0,1,0,0,0,0,0,0,1,0,
+		  1,0,0,0,0,0,0,0,0,1,
+		  1,0,0,0,0,0,0,0,0,1,
+
+		};
+
+		CONSOLE_SCREEN_BUFFER_INFO csbInfo;
+
+		GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbInfo);
+
+
+		CHAR_INFO PicBuffer[row * col];
+
+		for (int i = 0; i < row * col; i++)
+		{
+			PicBuffer[i].Char.UnicodeChar = L' ';
+			PicBuffer[i].Attributes = csbInfo.wAttributes;
 		}
 
-	}
-}
+		for(int i = 0; i < row * col; i++)
+				if(A[i] == 1)
+					PicBuffer[i].Attributes = 0;
 
-void DrawA()
-{
-	SetConsoleTitleW(L"Drawing A!!!");
-	Console::SetColor(BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | BACKGROUND_INTENSITY);
-	Console::cls();
-
-	const int row = 10;
-	const int col = 10;
-	
-	bool A[row * col]
-	{
-	  0,0,0,0,1,1,0,0,0,0,
-	  0,0,0,1,0,0,1,0,0,0,
-	  0,0,0,1,0,0,1,0,0,0,
-	  0,0,1,0,0,0,0,1,0,0,
-	  0,0,1,0,0,0,0,1,0,0,
-	  0,0,1,1,1,1,1,1,0,0,
-	  0,1,0,0,0,0,0,0,1,0,
-	  0,1,0,0,0,0,0,0,1,0,
-	  1,0,0,0,0,0,0,0,0,1,
-	  1,0,0,0,0,0,0,0,0,1,
-
-	};
-
-	CONSOLE_SCREEN_BUFFER_INFO csbInfo;
-
-	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbInfo);
+		int AnchorPositionX = 5;
+		int AnchorPositionY = 5;
 
 
-	CHAR_INFO PicBuffer[row * col];
+		SMALL_RECT WriteArea = { AnchorPositionX, AnchorPositionY, AnchorPositionX + col, AnchorPositionY + row };
 
-	for (int i = 0; i < row * col; i++)
-	{
-		PicBuffer[i].Char.UnicodeChar = L' ';
-		PicBuffer[i].Attributes = csbInfo.wAttributes;
-	}
-
-	for(int i = 0; i < row * col; i++)
-			if(A[i] == 1)
-				PicBuffer[i].Attributes = 0;
-
-	int AnchorPositionX = 5;
-	int AnchorPositionY = 5;
-
-
-	SMALL_RECT WriteArea = { AnchorPositionX, AnchorPositionY, AnchorPositionX + col, AnchorPositionY + row };
-
-	while (true)
-	{
-		if (GetKeyState(Console::Key::ESC) & 0x8000)
-			return;
+		while (true)
+		{
+			if (GetKeyState(VK_ESCAPE))
+				return;
 		
-		WriteConsoleOutputW(GetStdHandle(STD_OUTPUT_HANDLE), PicBuffer, { col, row }, { 0,0 }, &WriteArea);
+			WriteConsoleOutputW(GetStdHandle(STD_OUTPUT_HANDLE), PicBuffer, { col, row }, { 0,0 }, &WriteArea);
+		}
 	}
 
 }

@@ -3,6 +3,6 @@
 
 void ConsoleColorTable(bool executable);
 
-void RectangleMoving();
+void RectangleMoving(bool executable);
 
-void DrawA();
+void DrawA(bool executable);

@@ -84,15 +84,13 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 int main()
 {
-	
 
-	//int keyPressed{};
-	
-	//while(true)
-		DrawA();
-		//keyPressed = _getch();
+	ConsoleColorTable(true);
+	DrawA(true);
+	RectangleMoving(true);
 
 	return 0;
+
 }
 
 //Console API Info
